@@ -29,7 +29,9 @@ public class RoleBasedAccessFilter extends OncePerRequestFilter {
             "/swagger-resources",
             "/actuator/health",
             "/actuator/info",
-            "/favicon.ico"
+            "/favicon.ico",
+            "/healthcheck/ready",
+            "/healthcheck/live"
     );
 
     private boolean isPublic(String path) {
@@ -39,6 +41,8 @@ public class RoleBasedAccessFilter extends OncePerRequestFilter {
         if (path.startsWith("/swagger-ui") || path.startsWith("/swagger-resources")) return true;
         if (path.startsWith("/actuator")) return path.equals("/actuator/health") || path.equals("/actuator/info");
         if (path.equals("/favicon.ico")) return true;
+        if (path.equals("/healthcheck/ready")) return path.equals("/healthcheck/ready");
+        if (path.equals("/healthcheck/live")) return path.equals("/healthcheck/live");
         return false;
     }
 
