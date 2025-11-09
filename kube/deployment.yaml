@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hms-doctor-service-deployment
+  labels:
+    app: doctor-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: doctor-ms
+  template:
+    metadata:
+      labels:
+        app: doctor-ms
+    spec:
+      containers:
+        - name: doctor-ms
+          image: ghcr.io/kalyanimuppidi01/hms-doctor-and-scheduling:latest
+          ports:
+            - containerPort: 8082
+          livenessProbe:
+            httpGet:
+              path: /healthcheck/live
+              port: 8082
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /healthcheck/ready
+              port: 8082
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "50m"

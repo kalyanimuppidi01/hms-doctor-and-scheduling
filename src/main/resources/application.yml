@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://127.0.0.1:33062/doctordb?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    url: jdbc:mysql://host.docker.internal:33062/doctordb?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
     username: root
     password: password
   jpa:
